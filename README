@@ -1,0 +1,3 @@
+fillTree.C generates a tree with 2 physic variables, eta and pt, and save in Event macro.
+fit.C impoorts Event macro and fits eta and pt. Using a void function, I import Event macro, taking out the tree and divide pt and eta.
+By the function built in ROOT, I draw the fitting histogram of both and save as a macro called eta&pt.
