@@ -1,4 +1,4 @@
-The code to gernerate tb and gz table just modify Fang-Ying's code.
+The code to gernerate tb and gz table just modifies Fang-Ying's code, please see reference.
 I also attach the outcome root file.
 after doing following command, you can see the figure like gzTbTable.pdf.
 
