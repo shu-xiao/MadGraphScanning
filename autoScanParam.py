@@ -77,13 +77,14 @@ def generateEvent():
     s.wait()
     return s.returncode
 
-def nDir(path):
+
+'''def nDir(path):
 	ndir = 0
 	path0X = '../Events/run_0' 
 	pathXX = '../Events/run_'
 	for dirpath, dirname, filename in os.walk(path):
 		ndir += len(dirname)
-	'''
+	
 	if os.path.isdir(".git"):
 		## ndir -= 5
 		## if os.path.isdir('.git/logs'): ndir -= 1
@@ -96,42 +97,62 @@ def nDir(path):
 		if ndir < 10: testDir = path0X + str(ndir)
 		else: testDir = pathXX + str(ndir)
 		if ndir <= 0: break
-	'''
+	
 
-	return ndir	
+	return ndir	'''
+
+def nDir(path):
+        nRun = 1
+        outputfile = path + '/run_01'
+	while os.path.exists(outputfile) == True:
+                nRun += 1
+                if nRun < 10: outputfile = path + '/run_0' + str(nRun)
+                else: outputfile = path + '/run_' + str(nRun)
+        nRun -= 1
+        return nRun
 
 def main():
-    print nDir('.')
+    
     if not os.path.exists('../Bannerfile'):
         os.makedirs('../Bannerfile')
     errorinfo = []
     MzpList=["1.000000e+03","6.000000e+02","8.000000e+02","2.500000e+03","1.200000e+03","1.400000e+03","1.700000e+03","2.000000e+03","1.000000e+03"]
     MA0List=["3.000000e+02","4.000000e+02","5.000000e+02","6.000000e+02","7.000000e+02","8.000000e+02","3.000000e+02"]
-    for i in range(len(MzpList)):
+    for i in range(len(MzpList)-1):
         replaceMZp(MzpList[i],MzpList[i+1])
-        for j in range(len(MA0List)):
+        for j in range(len(MA0List)-1):
             getZpAutoWidth()
             getA0AutoWidth()
             replaceMA0(MA0List[j],MA0List[j+1]) 
+            ## get the path of output directory
             Noutput = nDir('../Events')
-            if Noutput < 10: outputDir = '../Events/run_' + str(Noutput)
-            else: outputDir = '../Events/run_0' + str(Noutput)
+            if Noutput+1 < 10: outputDir = 'Events/run_0' + str(Noutput+1)
+            else: outputDir = 'Events/run_' + str(Noutput+1)
             with cd(".."):
-                ## it tries 5 tims if there is no output directory
-                for nRun in range(5):  
+                ## it tries 3 tims if it do not generate output directory
+                for Runtime in range(3):  
+                    print "Mass point\tMZp:" + MzpList[i+1] + "\tMA0:" + MA0List[j+1]
                     generateEvent()
-                    if nDir('../Events') > Noutput: break
-		    else: errorinfo.append(['MZp', MzpList[i+1], 'MA0', MA0List[j+1]])
+                    ## check the output file exists or not and record the mass point when error occurs
+                    if os.path.exists(outputDir): break
+		    else: errorinfo.append('MZp:' + MzpList[i+1] + '\tMA0:' + MA0List[j+1])
+                ## move lhe files to Bannerfile
                 if Noutput+1 < 10: os.system("cp Events/run_0{}/run*.txt Bannerfile".format(str(Noutput+1)))
                 else: os.system("cp Events/run_{}/run*.txt Bannerfile".format(str(Noutput+1))) 	
-    print 'failed mass point'
+    
+    print 'mass point of failed run'
     for error in range(len(errorinfo)):
-        print error
+        print errorinfo[error]
     
     os.chdir('../Bannerfile')
-    os.system('wget https://raw.githubusercontent.com/syuvivida/DM/v0.04/getXsec/getXsecTable.py')
-    os.system('./getXsecTable.py -b')
+    #os.system('wget https://raw.githubusercontent.com/syuvivida/DM/v0.04/getXsec/getXsecTable.py')
+    os.system('cp ../Cards/getXsecTable.py .')
+    os.system('chmod 755 getXsecTable.py')
+    print 'making figure'
+    os.system('python getXsecTable.py')
+    print 'copy path'
     print os.getcwd()+'/*.root'
+
 if __name__ == "__main__":
    main()
 
