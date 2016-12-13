@@ -2,6 +2,7 @@
 #-------------------------------------------------------------
 # File: scanParam.py
 # Created: 12 July 2016 Fang-Ying Tsai
+# original script: https://github.com/syuvivida/DM/blob/v0.04/getXsec/scanParam.py
 # Modified: 12 Nov 2016 Shu-Xiao Liu
 #-------------------------------------------------------------  
 
