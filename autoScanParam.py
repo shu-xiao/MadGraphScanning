@@ -137,7 +137,7 @@ def main():
                     ## check the output file exists or not and record the mass point when error occurs
                     if os.path.exists(outputDir): break
 		    else: errorinfo.append('MZp:' + MzpList[i+1] + '\tMA0:' + MA0List[j+1])
-                ## move lhe files to Bannerfile
+                ## collect Banner files to new directory
                 if Noutput+1 < 10: os.system("cp Events/run_0{}/run*.txt Bannerfile".format(str(Noutput+1)))
                 else: os.system("cp Events/run_{}/run*.txt Bannerfile".format(str(Noutput+1))) 	
     
