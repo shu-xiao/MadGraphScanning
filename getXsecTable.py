@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 # File: getXsecTable.py
 # Created: 15 July 2016 Fang-Ying Tsai
-# MModified 15 Dec 2016 Shu-Xiao Liu
+# Modified 15 Dec 2016 Shu-Xiao Liu
 #-------------------------------------------------------------  
 import glob
 import errno
