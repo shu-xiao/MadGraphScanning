@@ -2,13 +2,14 @@
 #-------------------------------------------------------------
 # File: getXsecTable.py
 # Created: 15 July 2016 Fang-Ying Tsai
+# MModified 15 Dec 2016 Shu-Xiao Liu
 #-------------------------------------------------------------  
 import glob
 import errno
 from ROOT import TGraph, TFile, TCanvas, TH2F, gStyle
 from ROOT import TGraph2D
 from array import array
-
+import os
 class GetValue():
     def __init__(self):
     	self.fileNum = []
@@ -90,6 +91,7 @@ def main():
 	f.Write()
 	f.Close()
 	c1.Update()
-
+	print 'path of root file'
+        print os.getcwd()+'/*.root'
 if __name__ == "__main__":
    main()
