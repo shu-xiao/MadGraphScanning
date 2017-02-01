@@ -1,5 +1,5 @@
 The code to gernerate tb and gz table just modifies Fang-Ying's code on [Twiki](https://twiki.cern.ch/twiki/bin/viewauth/CMS/InstructionOfGettingCrossSection).
-After doing following command, you can see the figure like gzTbTable.pdf.
+After doing following command, you can see the figure in gzTbTable.pdf.
 ```
 root -l gzTbTable.root
 xsec1->Draw("textcolz")
