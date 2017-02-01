@@ -2,6 +2,7 @@
 import sys
 import csv
 from ROOT import TFile, TH2, TCanvas
+
 def readRootFile():
     return  sys.argv[1]
 def test_readhis(his, drawOption=''): 
@@ -31,7 +32,6 @@ def main():
     ma0List = [300,400,500,600,700,800]
     mzpList = [600,800,1000,1200,1400,1700,2000,2500]
     fname = readRootFile()
-    #print 'import ROOT file ' + fname
     f_root = TFile(fname)
     xsec1 = f_root.Get("xsec1")
 
@@ -41,8 +41,6 @@ def main():
     
     for ma0 in ma0List:
         for mzp in mzpList:
-            #xBin = xsec1.GetXaxis().FindBin(Mzp)
-            #yBin = xsec1.GetYaxis().FindBin(Ma0)
             xBin = getXindex(xsec1,mzp)
             yBin = getYindex(xsec1,ma0)
             crossSection = getBinValue(xsec1,xBin,yBin)
