@@ -4,42 +4,52 @@ import csv
 from ROOT import TFile, TH2, TCanvas
 def readRootFile():
     return  sys.argv[1]
-def test_readhis(his,drawOption=''): 
+def test_readhis(his, drawOption=''): 
     Canvas1 = TCanvas('','',800,600)
     his.Draw(drawOption)
     Canvas1.Print('test.pdf')
     return 'test import ROOT file'
+
+def getXindex(h_TH2, xvalue):
+    return h_TH2.GetXaxis().FindBin(xvalue)
+def getYindex(h_TH2, yvalue):
+    return h_TH2.GetYaxis().FindBin(yvalue)
+def getBinValue(h_TH2, xIndex, yIndex):
+    binValue = h_TH2.GetBinContent(xIndex,yIndex)
+    return binValue
+
 def writetoCSV(fname, dataList, deli='\t'):
     with open(fname, 'wb') as f:
         wr = csv.writer(f, delimiter=deli)
         wr.writerows(dataList)
     return None
-def
-def main():
-    Ma0List = [300,400,500,600,700,800]
-    MzpList = [600,800,1000,1200,1400,1700,2000,2500]
-    fname = readRootFile()
-    print 'import ROOT file ' + fname
-    f_root = TFile(fname)
-    
-    c1 = TCanvas('','',800,600)
-    xsec1 = f_root.Get("xsec1")
-    test_readhis(xsec1,'textcolz')  ## test
+def csvfileName(rootFileName):
+    csvFileName = rootFileName[0:len(rootFileName)-len('.root')] + '.txt'       
+    return csvFileName
 
-    print 'Ma0\tMzp\tCross-section'
+def main():
+    ma0List = [300,400,500,600,700,800]
+    mzpList = [600,800,1000,1200,1400,1700,2000,2500]
+    fname = readRootFile()
+    #print 'import ROOT file ' + fname
+    f_root = TFile(fname)
+    xsec1 = f_root.Get("xsec1")
+
+    #print 'Ma0\tMzp\tCross-section'
     data = []
     data.append(['Ma0','Mzp','Cross-section'])
     
-    for Ma0 in Ma0List:
-        for Mzp in MzpList:
-            xBin = xsec1.GetXaxis().FindBin(Mzp)
-            yBin = xsec1.GetYaxis().FindBin(Ma0)
-            crossSection = xsec1.GetBinContent(xBin,yBin)
-            
-            data.append([Ma0,Mzp,crossSection])
-            print str(Ma0) + '\t' + str(Mzp) + '\t' + str(crossSection)
-    csvfName = fname[0:len(fname)-len('.root')] + '.txt'       
-    writetoCSV(csvfName,data)
+    for ma0 in ma0List:
+        for mzp in mzpList:
+            #xBin = xsec1.GetXaxis().FindBin(Mzp)
+            #yBin = xsec1.GetYaxis().FindBin(Ma0)
+            xBin = getXindex(xsec1,mzp)
+            yBin = getYindex(xsec1,ma0)
+            crossSection = getBinValue(xsec1,xBin,yBin)
+            data.append([ma0,mzp,crossSection])
+            #print str(ma0) + '\t' + str(mzp) + '\t' + str(crossSection)
+    outputName = csvfileName(fname)       
+    writetoCSV(outputName,data)
 
 if __name__ == "__main__":
     main()
