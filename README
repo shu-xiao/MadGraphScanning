@@ -4,6 +4,6 @@ After doing following command, you can see the figure like gzTbTable.pdf.
     root -l gzTbTable.root
     xsec1->Draw("textcolz")
 
-To transform TH2F to CSV text file, use this [python script](./ma0mzp/TH2FtoCSV.py)
+To transform TH2F to CSV text file, use this [python script](https://github.com/shu-xiao/gztbDiagram/blob/master/ma0mzp/TH2FtoCSV.py)
 
     python TH2FtoCSV.py yourRootFile
