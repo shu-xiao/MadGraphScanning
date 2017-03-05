@@ -3,7 +3,7 @@ import sys
 import glob
 import csv
 import operator
-from ROOT import TFile, TH1F, TCanvas, gStyle
+from ROOT import TFile, TH1F, TCanvas, gStyle, TLegend
 
 class GetValue():
     def __init__(self):
@@ -72,24 +72,50 @@ def main():
         writer.writerow(['gq','Mmed','cross-section'])
         for a in sortList:
             writer.writerow([format(a.gq,'.2f'),format(a.zpMass,'.0f'),a.weight])
-            print format(a.gq,'.2f'),format(a.zpMass,'.0f'),a.weight, '\t', n
+            #print format(a.gq,'.2f'),format(a.zpMass,'.0f'),a.weight, '\t', n
             n+=1
     ## draw as histogram
     rootfile = TFile("ScangqMmed.root","recreate")
     c1 = TCanvas('c1','',1600,1200) 
-    h_gq = [TH1F(), TH1F(), TH1F()]
+    leg = TLegend(0.6,0.65,0.9,0.9)
+    #h_gq = [TH1F('gq=0.25','gq=0.25',20,0+50,2000+50), TH1F('gq=0.5','gq=0.5',20,0+50,2000+50), TH1F('gq=0.75','gq=0.75',20,0+50,2000+50)]
+    h_gq = [TH1F('gq=0.25','gq=0.25',20,0,2000), TH1F('gq=0.5','gq=0.5',20,0,2000), TH1F('gq=0.75','gq=0.75',20,0,2000)]
     for a in sortList:
         h_gq[int(a.gq//0.25-1)].Fill(a.zpMass,a.weight)
     for i in range(3):
         h_gq[i].SetXTitle("Mmed (GeV)")
         h_gq[i].SetYTitle("cross-section (pb)")
         h_gq[i].SetStats(0)
-        h_gq[i].Draw("hist")
-        h_gq[i].Write()
-    gStyle.SetPalette(1)
-
+        #h_gq[i].Draw("hist")
+    #gStyle.SetPalette(1)
+    gStyle.SetOptStat(0);
+    h_gq[2].SetLineColor(73)
+    h_gq[2].SetLineWidth(2)
+    h_gq[2].SetFillColor(73)
+    h_gq[2].SetFillStyle(3010)
+    #h_gq[2].GetXaxis().SetMinimum(0.)
+    h_gq[1].SetLineColor(4)
+    h_gq[1].SetLineWidth(2)
+    h_gq[1].SetFillColor(4)
+    h_gq[1].SetFillStyle(3010)
+    #h_gq[1].GetXaxis().SetMinimum(0.)
+    h_gq[0].SetLineColor(51)
+    h_gq[0].SetLineWidth(2)
+    h_gq[0].SetFillColor(51)
+    h_gq[0].SetFillStyle(3010)
+    #h_gq[0].GetXaxis().SetMinimum(0.)
+    h_gq[2].SetTitle('cross-section with gq = 0.25, 0.5, 0.75')
+    h_gq[2].Draw('hist')
+    h_gq[1].Draw('histsame')
+    h_gq[0].Draw('histsame')
+    leg.AddEntry(h_gq[2],"gq = 0.75")
+    leg.AddEntry(h_gq[1],"gq = 0.5")
+    leg.AddEntry(h_gq[0],"gq = 0.25")
+    leg.Draw()
+    c1.Update()
+    c1.Print('BaryonicZp.pdf')
+    c1.SaveAs('BaryonicZp.png')
     rootfile.Write()
     rootfile.Close()
-    c1.Update()
 if __name__ == "__main__":
     main()
