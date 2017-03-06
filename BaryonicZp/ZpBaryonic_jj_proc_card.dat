@@ -1,0 +1,12 @@
+import model Higgs_ZB_UFO
+define j = j b b~
+generate p p > h j j QED=3
+output ZBFOLDER -nojpeg
+launch ZBFOLDER
+       set MZp MMED
+       set mDM 100
+       set sp 0.3
+       set gDM 1
+       set gq gqu
+       set gZ gZZH
+       set WZp auto
