@@ -15,7 +15,8 @@ class GetValue():
     	self.model = []
 
 bannerList = []
-bannerPath = 'ZpBaryonic_bb_bannerDir/*_banner.txt'
+#bannerPath = 'ZpBaryonic_DMD100_bb_bannerDir/*_banner.txt'
+bannerPath = 'ZpBaryonic_DMD10_bb_bannerDir/*_banner.txt'
 banner_files = glob.glob(bannerPath)
 
 def getFile(fileName):
@@ -53,7 +54,7 @@ def getBannerList(f_banner):
 	    	    	s.zpMass = getMZpValue(line)
 	    	    elif line.find('mdm') > 0:
 	    	    	s.mdmMass = getMDMValue(line)
-	    	    elif line.find('Integrated weight') > 0:
+	    	    elif line.find('Integrated weight (pb)') > 0:
 	    	    	s.weight = getWeightValue(line)
 	    	    elif line.find('gq') > 0 and line.find('output') < 0:
                         s.gq = getGqValue(line)
@@ -67,7 +68,8 @@ def main():
     bannerList = getBannerList(banner_files)
     sortList = sorted(bannerList, key=operator.attrgetter('gq','zpMass'))
     n = 1
-    with open("ZpBaryonic_bb.txt","wb") as textfile:
+    #with open("ZpBaryonic_DMD100_bb.txt","wb") as textfile:
+    with open("ZpBaryonic_DMD10_bb.txt","wb") as textfile:
         writer = csv.writer(textfile, delimiter='\t')
         writer.writerow(['gq','Mmed','cross-section'])
         for a in sortList:
@@ -75,11 +77,13 @@ def main():
             #print format(a.gq,'.2f'),format(a.zpMass,'.0f'),a.weight, '\t', n
             n+=1
     ## draw as histogram
-    rootfile = TFile("ScangqMmed.root","recreate")
+    #rootfile = TFile("Scangq_Mmed100.root","recreate")
+    rootfile = TFile("Scangq_Mmed10.root","recreate")
     c1 = TCanvas('c1','',1600,1200) 
+    c1.Clear()
     leg = TLegend(0.6,0.65,0.9,0.9)
-    #h_gq = [TH1F('gq=0.25','gq=0.25',20,0+50,2000+50), TH1F('gq=0.5','gq=0.5',20,0+50,2000+50), TH1F('gq=0.75','gq=0.75',20,0+50,2000+50)]
-    h_gq = [TH1F('gq=0.25','gq=0.25',20,0,2000), TH1F('gq=0.5','gq=0.5',20,0,2000), TH1F('gq=0.75','gq=0.75',20,0,2000)]
+    #h_gq = [TH1F('gq=0.25','gq=0.25',20,0,2000), TH1F('gq=0.5','gq=0.5',20,0,2000), TH1F('gq=0.75','gq=0.75',20,0,2000)]
+    h_gq = [TH1F('gq=0.25','gq=0.25',20+1,0-50,2000+50), TH1F('gq=0.5','gq=0.5',20+1,0-50,2000+50), TH1F('gq=0.75','gq=0.75',20+1,0-50,2000+50)]
     for a in sortList:
         h_gq[int(a.gq//0.25-1)].Fill(a.zpMass,a.weight)
     for i in range(3):
@@ -93,18 +97,17 @@ def main():
     h_gq[2].SetLineWidth(2)
     h_gq[2].SetFillColor(73)
     h_gq[2].SetFillStyle(3010)
-    #h_gq[2].GetXaxis().SetMinimum(0.)
     h_gq[1].SetLineColor(4)
     h_gq[1].SetLineWidth(2)
     h_gq[1].SetFillColor(4)
     h_gq[1].SetFillStyle(3010)
-    #h_gq[1].GetXaxis().SetMinimum(0.)
     h_gq[0].SetLineColor(51)
     h_gq[0].SetLineWidth(2)
     h_gq[0].SetFillColor(51)
     h_gq[0].SetFillStyle(3010)
-    #h_gq[0].GetXaxis().SetMinimum(0.)
-    h_gq[2].SetTitle('cross-section with gq = 0.25, 0.5, 0.75')
+    
+    #h_gq[2].SetTitle('cross-section with DMD = 100 GeV, gq = 0.25, 0.5, 0.75')
+    h_gq[2].SetTitle('cross-section with DMD = 10 GeV, gq = 0.25, 0.5, 0.75')
     h_gq[2].Draw('hist')
     h_gq[1].Draw('histsame')
     h_gq[0].Draw('histsame')
@@ -112,9 +115,10 @@ def main():
     leg.AddEntry(h_gq[1],"gq = 0.5")
     leg.AddEntry(h_gq[0],"gq = 0.25")
     leg.Draw()
-    c1.Update()
-    c1.Print('BaryonicZp.pdf')
-    c1.SaveAs('BaryonicZp.png')
+    #c1.Print('BaryonicZp_DMD100.pdf')
+    #c1.SaveAs('BaryonicZp_DMD100.png')
+    c1.Print('BaryonicZp_DMD10.pdf')
+    c1.SaveAs('BaryonicZp_DMD10.png')
     rootfile.Write()
     rootfile.Close()
 if __name__ == "__main__":

@@ -1,0 +1,11 @@
+import model Higgs_ZB_UFO
+generate p p > h b b~ QED=3
+output ZpBaryonic_bb_MZp300_gq75_MDM100 -nojpeg
+launch ZpBaryonic_bb_MZp300_gq75_MDM100
+       set MZp 300
+       set mDM 10
+       set sp 0.3
+       set gDM 1
+       set gq 0.75
+       set gZ 100
+       set WZp auto
