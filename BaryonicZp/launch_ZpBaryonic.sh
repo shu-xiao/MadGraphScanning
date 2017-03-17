@@ -14,7 +14,7 @@ mmed=100
 mchi=100
 gq=0.25
 gzzhFactor=1
-gzzh=$(echo $mmed*$gzzhFactor | bc -l)
+#gzzh=$(echo $mmed*$gzzhFactor | bc -l)
 
 #for ((mmed=100; mmed<=2000; mmed=mmed+100 ))
 for gq in 0.25 0.5 0.75
@@ -22,6 +22,7 @@ do
 
     for ((mmed=100; mmed<=2000; mmed=mmed+100 ))
     do
+        gzzh=$(echo $mmed*$gzzhFactor | bc -l)
         echo ""
         echo "Producing cards for mediator mass = "$mmed" GeV"
         echo "Producing cards for DM mass = "$mchi" GeV"
@@ -33,10 +34,10 @@ do
         sed -e 's/ZBFOLDER/'$newname'/g' -e 's/gqu/'$gq'/g' -e 's/MMED/'$mmed'/g' -e 's/MCHI/'$mchi'/g' -e 's/gZZH/'$gzzh'/g' ZpBaryonic_bb_proc_card.dat > ${procCardDir}/${newname}_proc_card.dat
         #bsub -q2nw -R "rusage[mem=12000]" $PWD/runLaunch.sh $PWD $CARDSDIR/${newname}_proc_card.dat
         #$PWD/runLaunch.sh $PWD $CARDSDIR/${newname}_proc_card.dat
-        #if [ -f ${dirname}/${newname}_banner.txt ]; then
-        #    echo "continue "${newname}
-        #    continue
-        #fi
+        if [ -f ${dirname}/${newname}_banner.txt ]; then
+            echo "continue "${newname}
+            continue
+        fi
         ./bin/mg5_aMC  ${procCardDir}/${newname}_proc_card.dat
         cp ${newname}/Events/run_01/run_01_tag_1_banner.txt ${dirname}/${newname}_banner.txt
     done

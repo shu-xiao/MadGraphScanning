@@ -3,7 +3,7 @@ generate p p > h b b~ QED=3
 output ZBFOLDER -nojpeg
 launch ZBFOLDER
        set MZp MMED
-       set mDM 10
+       set mDM 100
        set sp 0.3
        set gDM 1
        set gq gqu

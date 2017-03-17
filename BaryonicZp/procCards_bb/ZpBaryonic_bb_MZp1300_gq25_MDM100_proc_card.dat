@@ -3,9 +3,9 @@ generate p p > h b b~ QED=3
 output ZpBaryonic_bb_MZp1300_gq25_MDM100 -nojpeg
 launch ZpBaryonic_bb_MZp1300_gq25_MDM100
        set MZp 1300
-       set mDM 10
+       set mDM 100
        set sp 0.3
        set gDM 1
        set gq 0.25
-       set gZ 100
+       set gZ 1300
        set WZp auto
