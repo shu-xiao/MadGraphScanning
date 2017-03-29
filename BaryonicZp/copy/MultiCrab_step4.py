@@ -19,7 +19,7 @@ def prepare(dataset):
 
 def submit(official):
     print "submitting"
-    f = open('step3_inputdataset.txt','r')
+    f = open('dmana_inputdataset.txt','r')
     for line in f:
         print line
         a=[]
@@ -30,7 +30,7 @@ def submit(official):
         if not official:
             name='crab submit -c crabConfig_step3.py General.requestName=step3-'+datasetdetail[1]+' Data.inputDataset='+datasetdetail[0]
         else:
-            name='crab submit -c crabConfig_DM.py General.requestName=step3-'+datasetdetail[1]+' Data.inputDataset='+datasetdetail[0]+' Data.inputDBS=global'
+            name='crab submit -c crabConfig_DM.py General.requestName=step4-'+datasetdetail[1]+' Data.inputDataset='+datasetdetail[0]+' Data.inputDBS=global'
         print name
         os.system(name)
 
