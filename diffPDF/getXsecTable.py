@@ -92,7 +92,7 @@ def main():
 	#histo_hA034 = TH2F('xsec2','Xsec(gz=0.8, tb=1.0) pdf setting 263400/263000/diff', len(xAxis)-1, xAxis, len(yAxis)-1, yAxis)
 	#histo_hA0Rate = TH2F('xsec3','Xsec(gz=0.8, tb=1.0) Rate', len(xAxis)-1, xAxis, len(yAxis)-1, yAxis)
 	histo_hA030 = TH2F('xsec1','Xsec(gz=0.8, tb=1.0) pdf setting 263000',17,500,4100,6,250,850)
-        histo_hA034 = TH2F('xsec2','Cross-Section (GZ=0.8, TB=1.0) with PDF Setting: 263400, 263000 and #DeltaCS',17,500,4100,6,250,850)
+        histo_hA034 = TH2F('xsec2','Cross-Section(pb) (GZ=0.8, TB=1.0) with PDF Setting: 263400, 263000 and #DeltaCS',17,500,4100,6,250,850)
 	histo_hA0Rate = TH2F('xsec3','Xsec(gz=0.8, tb=1.0) Rate',17,500,4100,6,250,850)
 
 	histo_hA034.SetXTitle("M_{Zp} (GeV)")
