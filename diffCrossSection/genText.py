@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 #-------------------------------------------------------------
-# File: getXsecTable.py
-# Created: 15 July 2016 Fang-Ying Tsai
-# Modified 15 Dec 2016 Shu-Xiao Liu
+# File: genText.py
+# Created: 12 May 2017 Shu-Xiao Liu
 #-------------------------------------------------------------  
 import glob
 import errno
@@ -21,7 +20,7 @@ class GetValue():
     	self.tanbeta = []
 
 hAList = []
-hApath = 'run_*.txt'  
+hApath = '../diffPDF/Bannerfile263400/*.txt'  
 hA_files = glob.glob(hApath) 
 
 def getFile(fileName):
