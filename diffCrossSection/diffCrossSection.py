@@ -15,7 +15,7 @@ def getCSVcontent(fName, deli="\t"):
 def diff(a=1.0,b=1.0):
     return (a-b)/b
 def main():
-    shuCrossSection = getCSVcontent("madGraph.txt")
+    shuCrossSection = getCSVcontent("madGraph20170527.txt")
     samCrossSection = getCSVcontent("GatheredCrossSections_pdf263400_mFixedToMA.txt")
     
     compareResult = []
