@@ -22,8 +22,10 @@ class GetValue():
 hAList = []
 hApath = '../diffPDF/Bannerfile263400/*.txt'  
 hApath2 = '../SamBannerfile3/*.txt'  
+hApath3 = '../BannerfileAlberto/*.txt'  
 hA_files = glob.glob(hApath) 
 hA_files2 = glob.glob(hApath2) 
+hA_files3 = glob.glob(hApath3) 
 
 def getFile(fileName):
 		num = str(fileName).split("_")[1].split(".")[0]
@@ -79,6 +81,7 @@ def main():
 
 	hAList = gethAList(hA_files)
 	hAList2 = gethAList(hA_files2)
+	hAList3 = gethAList(hA_files3)
         textLine = []
         title=["LHAID","mzp","ma","mhp","mh2","mDM","tanBeta","gZ" ,"Sigma[pb]"]
         xmassP = array('d',[600.,800.,1000.,1200.,1400.,1700.,2000.,2500.,2750.,3000.,3500.,4000.])
@@ -95,8 +98,14 @@ def main():
             for b in textLine:
                 if (int(a.zpMass)==int(b[1]) and int(a.ma0Mass)==int(b[2])): repeat = True
             if (not repeat): textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
+        for a in hAList3:
+	    repeat = False
+            for b in textLine:
+                if (int(a.zpMass)==int(b[1]) and int(a.ma0Mass)==int(b[2])): repeat = True
+            if (not repeat): textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
         textLine.sort()
-        with open("madGraph20170527.txt", "w") as f:
+        #with open("madGraph20170527.txt", "w") as f:
+        with open("madGraph20180315.txt", "w") as f:
             wr = csv.writer(f,delimiter="\t")
             wr.writerow(title)
             wr.writerows(textLine)
