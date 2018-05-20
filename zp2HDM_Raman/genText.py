@@ -20,7 +20,7 @@ class GetValue():
     	self.tanbeta = []
 
 hAList = []
-hApath = 'MA0300_part1/*.txt'  
+hApath = 'MA0300_part1/run*.txt'  
 #hApath2 = '../SamBannerfile3/*.txt'  
 #hApath3 = '../BannerfileAlberto/*.txt'  
 hA_files = glob.glob(hApath) 
@@ -28,10 +28,10 @@ hA_files = glob.glob(hApath)
 #hA_files3 = glob.glob(hApath3) 
 
 def getFile(fileName):
-		num = str(fileName).split("_")[1].split(".")[0]
+		num = str(fileName).split("_")[2]
 		global s
 		s = GetValue()
-		#s.fileNum = int(num)
+		s.fileNum = int(num)
 		return s
 
 def getMZpValue(readLine):
@@ -83,7 +83,7 @@ def main():
 	#hAList2 = gethAList(hA_files2)
 	#hAList3 = gethAList(hA_files3)
         textLine = []
-        title=["LHAID","mzp","ma","mhp","mh2","mDM","tanBeta","gZ" ,"Sigma[pb]"]
+        title=["fileID","LHAID","mzp","ma","mhp","mh2","mDM","tanBeta","gZ" ,"Sigma[pb]"]
         xmassP = array('d',[600.,800.,1000.,1200.,1400.,1700.,2000.,2500.,2750.,3000.,3500.,4000.])
         #yAxis = array('d',[300.,400.,500.,600.,700.,800.])
         xAxis = array('d',[500.,700.,900.,1100.,1300.,1550.,1750.,2250.,2600.,2900.,3200.,3750.,4200.])
@@ -91,9 +91,9 @@ def main():
         for a in hAList:
 	    repeat = False
             for b in textLine:
-                if (int(a.zpMass)==int(b[1]) and int(a.ma0Mass)==int(b[2])): repeat = True
-            #if (not repeat): textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
-            textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
+                if (int(a.zpMass)==int(b[2]) and int(a.ma0Mass)==int(b[3])and float(a.tanbeta)==float(b[7])): repeat = True
+            if (not repeat): textLine.append([a.fileNum,263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
+            #textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
         '''
         for a in hAList2:
 	    repeat = False
@@ -106,7 +106,8 @@ def main():
                 if (int(a.zpMass)==int(b[1]) and int(a.ma0Mass)==int(b[2])): repeat = True
             if (not repeat): textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
         '''
-        textLine.sort()
+        textLine.sort(key=lambda lista:lista[7])
+        textLine.sort(key=lambda lista:lista[2])
         #with open("madGraph20170527.txt", "w") as f:
         with open("madGraph20180519.txt", "w") as f:
             wr = csv.writer(f,delimiter="\t")
