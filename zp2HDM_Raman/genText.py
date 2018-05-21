@@ -20,8 +20,8 @@ class GetValue():
     	self.tanbeta = []
 
 hAList = []
-hApath = 'MA0400_v242/run*.txt'  
-hApath2 = 'MA0400_v233/run*.txt'  
+hApath = 'MA0500_v242/run*.txt'  
+hApath2 = 'MA0500_v233/run*.txt'  
 #hApath3 = '../BannerfileAlberto/*.txt'  
 hA_files = glob.glob(hApath) 
 hA_files2 = glob.glob(hApath2) 
@@ -109,7 +109,7 @@ def main():
         textLine.sort(key=lambda lista:lista[7])
         textLine.sort(key=lambda lista:lista[2])
         #with open("madGraph20170527.txt", "w") as f:
-        with open("madGraph_scanMZpTb_MA0400.txt", "w") as f:
+        with open("madGraph_scanMZpTb_MA0500.txt", "w") as f:
             wr = csv.writer(f,delimiter="\t")
             wr.writerow(title)
             wr.writerows(textLine)
