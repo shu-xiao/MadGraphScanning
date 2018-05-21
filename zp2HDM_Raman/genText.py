@@ -20,15 +20,15 @@ class GetValue():
     	self.tanbeta = []
 
 hAList = []
-hApath = 'MA0400/run*.txt'  
-#hApath2 = '../SamBannerfile3/*.txt'  
+hApath = 'MA0400_v242/run*.txt'  
+hApath2 = 'MA0400_v233/run*.txt'  
 #hApath3 = '../BannerfileAlberto/*.txt'  
 hA_files = glob.glob(hApath) 
-#hA_files2 = glob.glob(hApath2) 
+hA_files2 = glob.glob(hApath2) 
 #hA_files3 = glob.glob(hApath3) 
 
 def getFile(fileName):
-		num = str(fileName).split("_")[1]
+		num = str(fileName).split("_")[2]
 		global s
 		s = GetValue()
 		s.fileNum = int(num)
@@ -80,7 +80,7 @@ def gethAList(lhefile):
 def main():
 
 	hAList = gethAList(hA_files)
-	#hAList2 = gethAList(hA_files2)
+	hAList2 = gethAList(hA_files2)
 	#hAList3 = gethAList(hA_files3)
         textLine = []
         title=["fileID","LHAID","mzp","ma","mhp","mh2","mDM","tanBeta","gZ" ,"Sigma[pb]"]
@@ -94,12 +94,12 @@ def main():
                 if (int(a.zpMass)==int(b[2]) and int(a.ma0Mass)==int(b[3])and float(a.tanbeta)==float(b[7])): repeat = True
             if (not repeat): textLine.append([a.fileNum,263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
             #textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
-        '''
         for a in hAList2:
 	    repeat = False
             for b in textLine:
-                if (int(a.zpMass)==int(b[1]) and int(a.ma0Mass)==int(b[2])): repeat = True
-            if (not repeat): textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
+                if (int(a.zpMass)==int(b[2]) and int(a.ma0Mass)==int(b[3])and float(a.tanbeta)==float(b[7])): repeat = True
+            if (not repeat): textLine.append([a.fileNum,263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
+        '''
         for a in hAList3:
 	    repeat = False
             for b in textLine:
@@ -109,7 +109,7 @@ def main():
         textLine.sort(key=lambda lista:lista[7])
         textLine.sort(key=lambda lista:lista[2])
         #with open("madGraph20170527.txt", "w") as f:
-        with open("madGraph_MA0400.txt", "w") as f:
+        with open("madGraph_scanMZpTb_MA0400.txt", "w") as f:
             wr = csv.writer(f,delimiter="\t")
             wr.writerow(title)
             wr.writerows(textLine)
