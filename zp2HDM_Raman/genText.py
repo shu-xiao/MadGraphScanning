@@ -20,12 +20,12 @@ class GetValue():
     	self.tanbeta = []
 
 hAList = []
-hApath = 'MA0500_v242/run*.txt'  
-hApath2 = 'MA0500_v233/run*.txt'  
-#hApath3 = '../BannerfileAlberto/*.txt'  
+hApath = 'MA0300_v242/run*.txt'  
+hApath2 = 'MA0300_v233/run*.txt'  
+hApath3 = 'MA0300App_v242/run*.txt'  
 hA_files = glob.glob(hApath) 
 hA_files2 = glob.glob(hApath2) 
-#hA_files3 = glob.glob(hApath3) 
+hA_files3 = glob.glob(hApath3) 
 
 def getFile(fileName):
 		num = str(fileName).split("_")[2]
@@ -81,7 +81,7 @@ def main():
 
 	hAList = gethAList(hA_files)
 	hAList2 = gethAList(hA_files2)
-	#hAList3 = gethAList(hA_files3)
+	hAList3 = gethAList(hA_files3)
         textLine = []
         title=["fileID","LHAID","mzp","ma","mhp","mh2","mDM","tanBeta","gZ" ,"Sigma[pb]"]
         xmassP = array('d',[600.,800.,1000.,1200.,1400.,1700.,2000.,2500.,2750.,3000.,3500.,4000.])
@@ -99,17 +99,15 @@ def main():
             for b in textLine:
                 if (int(a.zpMass)==int(b[2]) and int(a.ma0Mass)==int(b[3])and float(a.tanbeta)==float(b[7])): repeat = True
             if (not repeat): textLine.append([a.fileNum,263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
-        '''
         for a in hAList3:
 	    repeat = False
             for b in textLine:
-                if (int(a.zpMass)==int(b[1]) and int(a.ma0Mass)==int(b[2])): repeat = True
-            if (not repeat): textLine.append([263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
-        '''
+                if (int(a.zpMass)==int(b[2]) and int(a.ma0Mass)==int(b[3])and float(a.tanbeta)==float(b[7])): repeat = True
+            if (not repeat): textLine.append([a.fileNum,263400, a.zpMass, a.ma0Mass, a.ma0Mass, a.ma0Mass, 100, a.tanbeta, 0.8, a.weight])
         textLine.sort(key=lambda lista:lista[7])
         textLine.sort(key=lambda lista:lista[2])
         #with open("madGraph20170527.txt", "w") as f:
-        with open("madGraph_scanMZpTb_MA0500.txt", "w") as f:
+        with open("madGraph_scanMZpTb_MA0300.txt", "w") as f:
             wr = csv.writer(f,delimiter="\t")
             wr.writerow(title)
             wr.writerows(textLine)
